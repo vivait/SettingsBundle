@@ -1,0 +1,25 @@
+{
+    "name": "vivait/settings-bundle",
+    "description": "Settings Bundle",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Kiel Goodman",
+            "email": "kiel@vivait.co.uk"
+        },
+        {
+            "name": "Lewis Wright",
+            "email": "lewis@vivait.co.uk"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+		    "vivait/bootstrap-bundle": "1.1.x"
+    },
+    "autoload": {
+        "psr-0": {
+            "Vivait\\SettingsBundle": ""
+        }
+    },
+    "target-dir": "Vivait/SettingsBundle"
+}
