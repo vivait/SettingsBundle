@@ -1,0 +1,48 @@
+{% extends viva_app_twig_base %}
+{% block sectiontitle %}Settings - <small>{{ tenant.tenant }}</small>{% endblock %}
+{% block sectionlinks %}
+{% endblock %}
+
+{% block section %}
+	<div class="row">
+		{% if db | length > 0 %}
+			<div class="col-md-3">
+				<ul class="nav nav-pills nav-stacked">
+					{% for row in db %}
+						<li{% if loop.first %} class="active"{% endif %}><a href="#tab-settings-{{ loop.index }}"
+																																data-toggle="tab">{{ row.name }}</a></li>
+					{% endfor %}
+				</ul>
+			</div>
+			<div class="col-md-9">
+				{{ form_start(form, {
+					attr: {
+						novalidate: 'novalidate',
+						class: 'form-horizontal'
+					}
+				}) }}
+				<div class="tab-content">
+					{{ form_errors(form) }}
+
+					{% for row in db %}
+						<fieldset class="tab-pane{% if loop.first %} active{% endif %}" id="tab-settings-{{ loop.index }}">
+							<legend>{{ row.name }}</legend>
+							{{ form_row(form[row.alias], {
+								horizontal_label_offset_class: '',
+							}) }}
+
+							<div class="form-group">
+								<div class="form-actions text-right col-lg-9">
+									<input type="submit" class="btn btn-primary" value="Submit"/>
+								</div>
+							</div>
+						</fieldset>
+					{% endfor %}
+				</div>
+				{{ form_end(form) }}
+			</div>
+		{% else %}
+			<p>There are no settings for you to configure.</p>
+		{% endif %}
+	</div>
+{% endblock %}

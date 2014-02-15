@@ -1,0 +1,3 @@
+viva_settings_maintenance_settings:
+    pattern:  /settings
+    defaults: { _controller: VivaSettingsBundle:Settings:edit }

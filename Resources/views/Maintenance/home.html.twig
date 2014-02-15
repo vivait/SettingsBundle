@@ -1,0 +1,20 @@
+{% extends viva_app_twig_base %}
+{% block sectiontitle %}Settings{% endblock %}
+{% block sectionlinks %}
+	<div class="btn-group">
+		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+			Choose a tenant{% if other_tenants|length %} <span class="caret"></span>{% endif %}
+		</button>
+		{% if other_tenants|length %}
+		<ul class="dropdown-menu pull-right" role="menu">
+			{% for other_tenant in other_tenants %}
+				<li><a href="{{ path('viva_settings_maintenance_settings_edit', {'tenant_id': other_tenant.id}) }}">{{ other_tenant.tenant }}</a></li>
+			{% endfor %}
+		</ul>
+		{% endif %}
+	</div>
+{% endblock %}
+
+{% block section %}
+
+{% endblock %}

@@ -1,0 +1,13 @@
+parameters:
+#    viva_settings.example.class: Viva\SettingsBundle\Example
+
+services:
+#    viva_settings.example:
+#        class: %viva_settings.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+
+  viva_settings.registry:
+    class: Viva\SettingsBundle\Services\SettingsService
+    arguments: [@doctrine, @logger, '@viva_auth.tenant_manager']
+    tags:
+        - { name: monolog.logger, channel: viva_settings }
