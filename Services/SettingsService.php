@@ -1,5 +1,5 @@
 <?php
-namespace Viva\SettingsBundle\Services;
+namespace Vivait\SettingsBundle\Services;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
@@ -7,7 +7,7 @@ use Monolog\Logger;
 use Symfony\Component\HttpFoundation\Request;
 use Viva\AuthBundle\Entity\Tenant;
 use Viva\AuthBundle\EventListener\TenantManager;
-use Viva\SettingsBundle\Interfaces\Settings;
+use Vivait\SettingsBundle\Interfaces\Settings;
 
 class SettingsService {
 	protected $definitions = array();
@@ -86,12 +86,12 @@ class SettingsService {
 
 		// Get all of the settings
 		$settings = $this->entity_manager
-			->getRepository('VivaSettingsBundle:Settings')
+			->getRepository('VivaitSettingsBundle:Settings')
 			->findByTenant($tenant);
 
 		$entity = array();
 
-		/* @var $setting \Viva\SettingsBundle\Entity\Settings */
+		/* @var $setting \Vivait\SettingsBundle\Entity\Settings */
 		foreach ($settings as $setting) {
 			$entity
 				[$setting->getServiceAlias()]

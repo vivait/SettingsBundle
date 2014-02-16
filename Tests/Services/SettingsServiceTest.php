@@ -1,9 +1,9 @@
 <?php
 
-namespace Viva\SettingsBundle\Tests\Controller;
+namespace Vivait\SettingsBundle\Tests\Controller;
 
-use Viva\SettingsBundle\Entity\Settings;
-use Viva\SettingsBundle\Services\SettingsService;
+use Vivait\SettingsBundle\Entity\Settings;
+use Vivait\SettingsBundle\Services\SettingsService;
 
 class SettingsServiceTest extends \PHPUnit_Framework_TestCase
 {
@@ -17,14 +17,14 @@ class SettingsServiceTest extends \PHPUnit_Framework_TestCase
 	}
 
     public function testAddDefinition() {
-		$definition1 = $this->getMockForAbstractClass('Viva\SettingsBundle\Interfaces\Settings');
-		$definition2 = $this->getMockForAbstractClass('Viva\SettingsBundle\Interfaces\Settings');
-		$definition3 = $this->getMockForAbstractClass('Viva\SettingsBundle\Interfaces\Settings');
+		$definition1 = $this->getMockForAbstractClass('Vivait\SettingsBundle\Interfaces\Settings');
+		$definition2 = $this->getMockForAbstractClass('Vivait\SettingsBundle\Interfaces\Settings');
+		$definition3 = $this->getMockForAbstractClass('Vivait\SettingsBundle\Interfaces\Settings');
 
 		$service = new SettingsService($this->doctrine);
 
 		// Check for chainability
-		$this->assertInstanceOf('Viva\SettingsBundle\Services\SettingsService', $service->addDefinition($definition1, 'alias1'));
+		$this->assertInstanceOf('Vivait\SettingsBundle\Services\SettingsService', $service->addDefinition($definition1, 'alias1'));
 		// Check it has added it ok
 		$this->assertAttributeCount(1, 'definitions', $service);
 
@@ -42,7 +42,7 @@ class SettingsServiceTest extends \PHPUnit_Framework_TestCase
 	 */
 	public function testGetDefinition(SettingsService $service) {
 		// Check it can fetch it
-		$this->assertInstanceOf('Viva\SettingsBundle\Interfaces\Settings', $service->getDefinition('alias1'));
+		$this->assertInstanceOf('Vivait\SettingsBundle\Interfaces\Settings', $service->getDefinition('alias1'));
 
 		// Check it doesn't error when fetching non-existent classes
 		$this->assertNull($service->getDefinition('noneexistent'));
@@ -55,9 +55,9 @@ class SettingsServiceTest extends \PHPUnit_Framework_TestCase
 		$this->assertInternalType('array', $service->getDefinitions());
 
 		// Add some items
-		$service->addDefinition($this->getMockForAbstractClass('Viva\SettingsBundle\Interfaces\Settings'), 'alias1');
-		$service->addDefinition($this->getMockForAbstractClass('Viva\SettingsBundle\Interfaces\Settings'), 'alias2');
-		$service->addDefinition($this->getMockForAbstractClass('Viva\SettingsBundle\Interfaces\Settings'), 'alias3');
+		$service->addDefinition($this->getMockForAbstractClass('Vivait\SettingsBundle\Interfaces\Settings'), 'alias1');
+		$service->addDefinition($this->getMockForAbstractClass('Vivait\SettingsBundle\Interfaces\Settings'), 'alias2');
+		$service->addDefinition($this->getMockForAbstractClass('Vivait\SettingsBundle\Interfaces\Settings'), 'alias3');
 
 		// Check it's returning all 3 as an array
 		$this->assertInternalType('array', $service->getDefinitions());
@@ -66,7 +66,7 @@ class SettingsServiceTest extends \PHPUnit_Framework_TestCase
 
 	public function testGetSettings() {
 		// Mock the settings entities
-		$entity = $this->getMock('Viva\SettingsBundle\Entity\Settings', array('getServiceAlias', 'getAlias', 'getValue'));
+		$entity = $this->getMock('Vivait\SettingsBundle\Entity\Settings', array('getServiceAlias', 'getAlias', 'getValue'));
 
 		$entity
 			->expects($this->exactly(3))

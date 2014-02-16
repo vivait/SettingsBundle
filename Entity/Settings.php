@@ -1,6 +1,6 @@
 <?php
 
-namespace Viva\SettingsBundle\Entity;
+namespace Vivait\SettingsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace Viva\SettingsBundle\Interfaces;
+namespace Vivait\SettingsBundle\Interfaces;
 
 use Symfony\Component\Form\AbstractType;
-use Viva\SettingsBundle\Services\SettingsService;
+use Vivait\SettingsBundle\Services\SettingsService;
 
 interface Settings
 {

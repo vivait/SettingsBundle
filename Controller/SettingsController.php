@@ -1,18 +1,18 @@
 <?php
 
-namespace Viva\SettingsBundle\Controller;
+namespace Vivait\SettingsBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\HttpFoundation\Request;
-use Viva\SettingsBundle\Entity\Settings;
+use Vivait\SettingsBundle\Entity\Settings;
 
 class SettingsController extends Controller {
 	public function editAction(Request $request) {
 		$tenant    = $this->getUser()->getCurrentTenant();
 		$em        = $this->getDoctrine()->getManager();
-		$repo      = $em->getRepository('VivaSettingsBundle:Settings');
-		$service   = $this->get('viva_settings.registry');
+		$repo      = $em->getRepository('VivaitSettingsBundle:Settings');
+		$service   = $this->get('vivait_settings.registry');
 		$entity    = $service->getSettings($tenant);
 		$builder   = $this->createFormBuilder($entity);
 		$parts     = array();
@@ -70,7 +70,7 @@ class SettingsController extends Controller {
 
 		//$this->createForm(new SettingsType($this->getDoctrine(), $definitions));
 
-		return $this->render('VivaSettingsBundle:Maintenance:settings.html.twig', array(
+		return $this->render('VivaitSettingsBundle:Maintenance:settings.html.twig', array(
 			'tenant'        => $tenant,
 			'db'            => $parts,
 			'form'          => $form->createView()

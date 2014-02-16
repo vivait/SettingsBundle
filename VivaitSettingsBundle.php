@@ -1,12 +1,12 @@
 <?php
 
-namespace Viva\SettingsBundle;
+namespace Vivait\SettingsBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Viva\SettingsBundle\DependencyInjection\SettingsCompilerPass;
+use Vivait\SettingsBundle\DependencyInjection\SettingsCompilerPass;
 
-class VivaSettingsBundle extends Bundle
+class VivaitSettingsBundle extends Bundle
 {
 	public function build(ContainerBuilder $container)
 	{

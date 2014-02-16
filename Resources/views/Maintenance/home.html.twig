@@ -8,7 +8,7 @@
 		{% if other_tenants|length %}
 		<ul class="dropdown-menu pull-right" role="menu">
 			{% for other_tenant in other_tenants %}
-				<li><a href="{{ path('viva_settings_maintenance_settings_edit', {'tenant_id': other_tenant.id}) }}">{{ other_tenant.tenant }}</a></li>
+				<li><a href="{{ path('vivait_settings_maintenance_settings_edit', {'tenant_id': other_tenant.id}) }}">{{ other_tenant.tenant }}</a></li>
 			{% endfor %}
 		</ul>
 		{% endif %}
