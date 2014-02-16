@@ -42,7 +42,7 @@ class Settings {
 	private $value;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="\Viva\AuthBundle\Entity\Tenant", inversedBy="settings")
+	 * @ORM\ManyToOne(targetEntity="\Vivait\AuthBundle\Entity\Tenant", inversedBy="settings")
 	 */
 	private $tenant;
 
@@ -124,10 +124,10 @@ class Settings {
     /**
      * Set tenant
      *
-     * @param \Viva\AuthBundle\Entity\Tenant $tenant
+     * @param \Vivait\AuthBundle\Entity\Tenant $tenant
      * @return Settings
      */
-    public function setTenant(\Viva\AuthBundle\Entity\Tenant $tenant = null)
+    public function setTenant(\Vivait\AuthBundle\Entity\Tenant $tenant = null)
     {
         $this->tenant = $tenant;
     
@@ -137,7 +137,7 @@ class Settings {
     /**
      * Get tenant
      *
-     * @return \Viva\AuthBundle\Entity\Tenant 
+     * @return \Vivait\AuthBundle\Entity\Tenant
      */
     public function getTenant()
     {

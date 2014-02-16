@@ -5,8 +5,8 @@ use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
 use Monolog\Logger;
 use Symfony\Component\HttpFoundation\Request;
-use Viva\AuthBundle\Entity\Tenant;
-use Viva\AuthBundle\EventListener\TenantManager;
+use Vivait\AuthBundle\Entity\Tenant;
+use Vivait\AuthBundle\EventListener\TenantManager;
 use Vivait\SettingsBundle\Interfaces\Settings;
 
 class SettingsService {
