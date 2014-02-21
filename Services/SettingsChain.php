@@ -103,12 +103,7 @@ class SettingsChain {
 			}
 		}
 
-		/*
-		 * - Make the service tag store a reference to the driver directly.
-		 * - Allow multiple drivers to be specified
-		 * - Possibly move this configure method to its own service?
-		 * - Implement a tenant doctrine driver
-		 */
+		$this->logger->error(sprintf('No setting group "%s" found.', $definition['alias']));
 
 		return $object;
 	}
