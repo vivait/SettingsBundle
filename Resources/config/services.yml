@@ -6,8 +6,24 @@ services:
 #        class: %vivait_settings.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
 
+
+  vivait_settings.repository.settings:
+    class: Doctrine\ORM\EntityRepository
+    factory_service: doctrine.orm.entity_manager
+    factory_method: getRepository
+    arguments:
+        - VivaitSettingsBundle:Settings
+
+  vivait_settings.driver.yaml:
+    class: Vivait\SettingsBundle\Driver\YamlDriver
+    arguments: [@service_container]
+
+  vivait_settings.driver.doctrine:
+    class: Vivait\SettingsBundle\Driver\DoctrineDriver
+    arguments: [@vivait_settings.repository.settings]
+
   vivait_settings.registry:
-    class: Vivait\SettingsBundle\Services\SettingsService
-    arguments: [@doctrine, @logger, '@vivait_auth.tenant_manager']
+    class: Vivait\SettingsBundle\Services\SettingsChain
+    arguments: [@logger, @vivait_settings.driver.doctrine]
     tags:
         - { name: monolog.logger, channel: vivait_settings }
