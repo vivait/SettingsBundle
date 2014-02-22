@@ -27,3 +27,6 @@ services:
     arguments: [@logger, @vivait_settings.driver.doctrine]
     tags:
         - { name: monolog.logger, channel: vivait_settings }
+
+  vivait_settings.form.registry:
+    class: Vivait\SettingsBundle\Services\FormChain

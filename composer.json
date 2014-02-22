@@ -14,10 +14,12 @@
     ],
     "minimum-stability": "stable",
     "require": {
-		    "vivait/bootstrap-bundle": "1.1.x"
+		"jms/serializer": ">=0.11.0",
+		"symfony/yaml": ">=2.4.*@dev",
+		"vivait/bootstrap-bundle": "1.1.x"
     },
 	"require-dev": {
-		"phpspec/phpspec": ">2.0.*@dev"
+		"phpspec/phpspec": "dev-master"
 	},
     "autoload": {
         "psr-0": {

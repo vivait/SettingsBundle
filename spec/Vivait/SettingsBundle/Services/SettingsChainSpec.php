@@ -170,4 +170,84 @@ class SettingsChainSpec extends ObjectBehavior {
 		$this->configure($obj)
 			->shouldReturn($obj);
 	}
+
+	/**
+	 * @param object $service
+	 * @param \Vivait\SettingsBundle\Driver\ParametersStorageInterface $driver1
+	 */
+	function it_should_pass_the_setting_to_the_service_via_its_property($service, ParametersStorageInterface $driver1) {
+		$driver1->has('[test1]')
+			->willReturn(true);
+
+		$driver1->get('[test1]')
+			->willReturn(array(
+				'property' => 'value'
+			));
+
+		// It should call the setter
+		$service->setProperty()
+			->shouldBeCalled();
+
+		$this->addDefinition($service, 'test1')
+			->shouldReturn($this);
+
+		$this->addDriver($service, $driver1);
+
+		$this->configure($service)
+			->shouldReturn($service);
+	}
+
+	/**
+	 * @param object $service
+	 * @param \Vivait\SettingsBundle\Driver\ParametersStorageInterface $driver1
+	 */
+	function it_should_pass_the_setting_to_the_service_via_its_getter($service, ParametersStorageInterface $driver1) {
+		$driver1->has('[test1]')
+			->willReturn(true);
+
+		$driver1->get('[test1]')
+			->willReturn(array(
+				'property' => 'value'
+			));
+
+		// It should call the setter
+		$service->setProperty()
+			->shouldBeCalled();
+
+		$this->addDefinition($service, 'test1')
+			->shouldReturn($this);
+
+		$this->addDriver($service, $driver1);
+
+		$this->configure($service)
+			->shouldReturn($service);
+
+		$service->getProperty()->shouldBe('value');
+	}
+
+	/**
+	 * @param object $service
+	 * @param \Vivait\SettingsBundle\Driver\ParametersStorageInterface $driver1
+	 */
+	function it_should_not_error_if_no_property_exists_for_that_service($service, ParametersStorageInterface $driver1) {
+		$driver1->has('[test1]')
+			->willReturn(true);
+
+		$driver1->get('[test1]')
+			->willReturn(array(
+				'invalid' => 'value'
+			));
+
+//		// It should call the setter
+//		$service->setSetting()
+//			->shouldBeCalled();
+
+		$this->addDefinition($service, 'test1')
+			->shouldReturn($this);
+
+		$this->addDriver($service, $driver1);
+
+		$this->configure($service)
+			->shouldReturn($service);
+	}
 }

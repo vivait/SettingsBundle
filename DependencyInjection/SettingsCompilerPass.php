@@ -14,12 +14,13 @@ class SettingsCompilerPass implements CompilerPassInterface {
 			return;
 		}
 
-		$definition = $container->getDefinition(
+		$registry = $container->getDefinition(
 			'vivait_settings.registry'
 		);
 
-		$this->processServices($container, $definition);
-		$this->processDrivers($container, $definition);
+		$this->processServices($container, $registry);
+		$this->processDrivers($container, $registry);
+		$this->processForms($container, $container->getDefinition('vivait_settings.form.registry'));
 	}
 
 	private function processServices(ContainerBuilder $container, Definition $definition) {
@@ -49,6 +50,22 @@ class SettingsCompilerPass implements CompilerPassInterface {
 					$definition->addMethodCall(
 						'addDriver',
 						array(new Reference($id), new Reference($attributes["driver"]))
+					);
+				}
+			}
+		}
+	}
+
+	private function processForms(ContainerBuilder $container, Definition $definition) {
+		$taggedServices = $container->findTaggedServiceIds(
+			'vivait_settings.register.form'
+		);
+		foreach ($taggedServices as $id => $tagAttributes) {
+			foreach ($tagAttributes as $attributes) {
+				if (!empty($attributes["for"])) {
+					$definition->addMethodCall(
+						'addDefinition',
+						array(new Reference($id), $attributes["for"], isset($attributes['title']) ? $attributes['title'] : ucwords($attributes['for']))
 					);
 				}
 			}

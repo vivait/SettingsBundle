@@ -2,6 +2,8 @@
 namespace Vivait\SettingsBundle\Services;
 
 use Monolog\Logger;
+use Symfony\Component\PropertyAccess\Exception\AccessException;
+use Symfony\Component\PropertyAccess\Exception\NoSuchPropertyException;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Vivait\SettingsBundle\Driver\ParametersStorageInterface;
 
@@ -23,6 +25,22 @@ class SettingsChain {
 		$this->default_driver = $default_driver;
 		$this->definitions    = new \SplObjectStorage();
 		$this->accessor       = PropertyAccess::createPropertyAccessor();
+	}
+
+	/**
+	 * Sets default_driver
+	 * @param \Vivait\SettingsBundle\Driver\ParametersStorageInterface $default_driver
+	 */
+	public function setDefaultDriver($default_driver) {
+		$this->default_driver = $default_driver;
+		return $this;
+	}
+
+	/**
+	 * @return \Vivait\SettingsBundle\Driver\ParametersStorageInterface
+	 */
+	public function getDefaultDriver() {
+		return $this->default_driver;
 	}
 
 	public function addDefinition($definition, $alias)
@@ -96,7 +114,12 @@ class SettingsChain {
 				$settings = $driver->get($alias);
 
 				foreach ($settings as $key => $value) {
-					$this->accessor->setValue($object, $key, $value);
+					try {
+						$this->accessor->setValue($object, $key, $value);
+					}
+					catch (AccessException $e) {
+						$this->logger->error(sprintf('Could not set setting %s[%s] for object type %s', $definition['alias'], $key, get_class($object)));
+					}
 				}
 
 				return $object;
