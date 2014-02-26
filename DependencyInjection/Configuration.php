@@ -17,6 +17,9 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        return new TreeBuilder();
+        $tree = new TreeBuilder();
+        $treeBuilder->root('vivait_settings');
+        
+        return $tree;
     }
 }
