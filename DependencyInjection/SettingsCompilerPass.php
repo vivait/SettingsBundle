@@ -14,30 +14,8 @@ class SettingsCompilerPass implements CompilerPassInterface {
 			return;
 		}
 
-		$registry = $container->getDefinition(
-			'vivait_settings.registry'
-		);
-
-		$this->processServices($container, $registry);
-		$this->processDrivers($container, $registry);
-		$this->processForms($container, $container->getDefinition('vivait_settings.form.registry'));
-	}
-
-	private function processServices(ContainerBuilder $container, Definition $definition) {
-		$taggedServices = $container->findTaggedServiceIds(
-			'vivait_settings.register'
-		);
-
-		foreach ($taggedServices as $id => $tagAttributes) {
-			foreach ($tagAttributes as $attributes) {
-				if (!empty($attributes["alias"])) {
-					$definition->addMethodCall(
-						'addDefinition',
-						array(new Reference($id), $attributes["alias"])
-					);
-				}
-			}
-		}
+		$this->processDrivers($container, $container->getDefinition('vivait_settings.registry.drivers'));
+		$this->processForms($container, $container->getDefinition('vivait_settings.registry.forms'));
 	}
 
 	private function processDrivers(ContainerBuilder $container, Definition $definition) {
@@ -45,14 +23,20 @@ class SettingsCompilerPass implements CompilerPassInterface {
 			'vivait_settings.register.driver'
 		);
 		foreach ($taggedServices as $id => $tagAttributes) {
+			$alias = $id;
+
+			// Have they tagged it with an alias?
 			foreach ($tagAttributes as $attributes) {
-				if (!empty($attributes["driver"])) {
-					$definition->addMethodCall(
-						'addDriver',
-						array(new Reference($id), new Reference($attributes["driver"]))
-					);
+				if (!empty($attributes["alias"])) {
+					$alias = $attributes["alias"];
+					break;
 				}
 			}
+
+			$definition->addMethodCall(
+				'addDriver',
+				array($alias, new Reference($id))
+			);
 		}
 	}
 
@@ -62,12 +46,13 @@ class SettingsCompilerPass implements CompilerPassInterface {
 		);
 		foreach ($taggedServices as $id => $tagAttributes) {
 			foreach ($tagAttributes as $attributes) {
-				if (!empty($attributes["for"])) {
-					$definition->addMethodCall(
-						'addDefinition',
-						array(new Reference($id), $attributes["for"], isset($attributes['title']) ? $attributes['title'] : ucwords($attributes['for']))
-					);
-				}
+				$definition->addMethodCall(
+					'attach',
+					array(new Reference($id), array(
+						'title' => $attributes['title'],
+						'for'   => $attributes['for']
+					))
+				);
 			}
 		}
 	}

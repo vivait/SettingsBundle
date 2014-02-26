@@ -5,12 +5,12 @@
 
 {% block section %}
 	<div class="row">
-		{% if db | length > 0 %}
+		{% if areas | length > 0 %}
 			<div class="col-md-3">
 				<ul class="nav nav-pills nav-stacked">
-					{% for row in db %}
+					{% for row in areas %}
 						<li{% if loop.first %} class="active"{% endif %}><a href="#tab-settings-{{ loop.index }}"
-																																data-toggle="tab">{{ row.name }}</a></li>
+																																data-toggle="tab">{{ row.title }}</a></li>
 					{% endfor %}
 				</ul>
 			</div>
@@ -24,10 +24,10 @@
 				<div class="tab-content">
 					{{ form_errors(form) }}
 
-					{% for row in db %}
+					{% for row in areas %}
 						<fieldset class="tab-pane{% if loop.first %} active{% endif %}" id="tab-settings-{{ loop.index }}">
-							<legend>{{ row.name }}</legend>
-							{{ form_row(form[row.alias], {
+							<legend>{{ row.title }}</legend>
+							{{ form_row(form[row.for], {
 								horizontal_label_offset_class: '',
 							}) }}
 

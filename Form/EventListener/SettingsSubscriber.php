@@ -1,6 +1,7 @@
 <?php
 namespace Vivait\SettingsBundle\Form\EventListener;
 
+use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -9,49 +10,39 @@ use Vivait\SettingsBundle\Driver\ParametersStorageInterface;
 class SettingsSubscriber implements EventSubscriberInterface
 {
 	/* @var $driver ParametersStorageInterface */
-	protected $driver;
+	private $driver;
 
-	public function __construct(ParametersStorageInterface $driver = null) {
+	function __construct(ParametersStorageInterface $driver) {
 		$this->driver = $driver;
 	}
 
 	public static function getSubscribedEvents()
 	{
 		return array(
-			FormEvents::SUBMIT => 'Submit'
+			FormEvents::POST_SET_DATA => 'hydrateDataEvent'
 		);
 	}
 
-	public function Submit(FormEvent $event)
-	{
-		$groups = $event->getData();
-
-		$this->setData($groups);
-		exit;
-//		foreach ($groups as $group => $data) {
-//			foreach ($data as $key => $value) {
-//				$this->driver->set($group .'.'. $value);
-//			}
-//		}
-
-		exit;
-
-
-//
-//		if (!$product || null === $product->getId()) {
-//			$form->add('name', 'text');
-//		}
+	public function hydrateDataEvent(FormEvent $event) {
+		foreach ($event->getForm()->all() as $child) {
+			$this->hydrateData($child);
+		}
 	}
 
-	protected function setData($data, $path = '')
+	public function hydrateData(Form $form, $path = '')
 	{
-		if (is_array($data)) {
-			foreach ($data as $key => $value) {
-				$this->setData($value, ($path ? $path .'.' : '') . $key);
+		$children = $form->all();
+		$path = ($path ? $path .'.' : $path) . $form->getName();
+
+		if (count($children)) {
+			foreach ($children as $child) {
+				$this->hydrateData($child, $path);
 			}
 		}
 		else {
-			$this->driver->set($path, $value);
+			if ($form->getData() === null) {
+				$form->setData($this->driver->get($path));
+			}
 		}
 	}
 }

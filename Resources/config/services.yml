@@ -6,7 +6,11 @@ services:
 #        class: %vivait_settings.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
 
+#  vivait_settings.expression_language:
+#    class: Vivait\SettingsBundle\ExpressionLanguage
+#    public: false
 
+  # Repositories
   vivait_settings.repository.settings:
     class: Doctrine\ORM\EntityRepository
     factory_service: doctrine.orm.entity_manager
@@ -14,19 +18,28 @@ services:
     arguments:
         - VivaitSettingsBundle:Settings
 
+  # Drivers
   vivait_settings.driver.yaml:
     class: Vivait\SettingsBundle\Driver\YamlDriver
     arguments: [@service_container]
+    tags:
+        - { name: vivait_settings.register.driver, alias: 'yaml' }
 
   vivait_settings.driver.doctrine:
     class: Vivait\SettingsBundle\Driver\DoctrineDriver
-    arguments: [@vivait_settings.repository.settings]
+    arguments: [@doctrine.orm.default_entity_manager, @vivait_settings.repository.settings]
+    tags:
+        - { name: vivait_settings.register.driver, alias: 'doctrine' }
+
+  # Registries
+  vivait_settings.registry.drivers:
+    class: Vivait\SettingsBundle\Services\DriversChain
+
+  vivait_settings.registry.forms:
+    class: Vivait\SettingsBundle\Services\FormChain
 
   vivait_settings.registry:
     class: Vivait\SettingsBundle\Services\SettingsChain
-    arguments: [@logger, @vivait_settings.driver.doctrine]
+    arguments: [@vivait_settings.registry.drivers, @logger]
     tags:
         - { name: monolog.logger, channel: vivait_settings }
-
-  vivait_settings.form.registry:
-    class: Vivait\SettingsBundle\Services\FormChain
