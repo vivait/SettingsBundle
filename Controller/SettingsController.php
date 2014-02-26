@@ -3,7 +3,6 @@
 namespace Vivait\SettingsBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\HttpFoundation\Request;
 use Vivait\SettingsBundle\Entity\Settings;
 use Vivait\SettingsBundle\Form\DataTransformer\KeyToArrayTransformer;
