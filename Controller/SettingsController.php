@@ -18,7 +18,6 @@ class SettingsController extends Controller {
 		$driver       = $this->get('vivait_settings.driver.doctrine');
 		$settingsType = new SettingsType($driver, $forms);
 
-		// TODO: Let the request override this
 		$form = $this->createForm($settingsType);
 
 		$form->handleRequest($request);
