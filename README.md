@@ -102,11 +102,11 @@ For maximum flexibility, a new form type should be created for each group of set
 The bundle provides a SettingsType which will handle the binding of the form submission to updating a driver's storage. An instance of SettingsType can only be binded to one driver, and in most cases this should be sufficient. The Yaml driver cannot be used with the SettingsType because it is not persistent, this driver is meant as a fallback driver. An example of how to build your form is below:
 
 ```php
-		$form         = new MyServiceType();
-		$driver       = $this->get('vivait_settings.driver.doctrine');
-		$settingsType = new SettingsType($driver, $form);
+$form         = new MyServiceType(); // Change this with your form type
+$driver       = $this->get('vivait_settings.driver.doctrine');
+$settingsType = new SettingsType($driver, $form);
 
-		$form = $this->createForm($settingsType);
+$form = $this->createForm($settingsType);
 ```
 
 In this example, the settings bundle will act as a middleman, binding the settings to ```MyServiceType``` and updating the driver when the form is successfully submitted.
@@ -119,10 +119,10 @@ When dealing with settings from multiple components, it is recommended to group 
 To register a settings form for a group of settings (e.g. myservice), you must tag it with ```vivait_settings.register.form```, provide it with an alias that matches the group name of your settings, and provide it with a title:
 
 ```yaml
-    me.mybundle.myservice.form_type:
-        class: Me\MyBundle\Form\Type\Settings\MyServiceType
-        tags:
-            - { name: vivait_settings.register.form, for: myservice, title: 'My Service Settings' }
+  me.mybundle.myservice.form_type:
+    class: Me\\MyBundle\\Form\\Type\\Settings\\MyServiceType
+    tags:
+      - { name: vivait_settings.register.form, for: myservice, title: 'My Service Settings' }
 ```
 
 All settings in this group will accessible via myservice.settingname.
