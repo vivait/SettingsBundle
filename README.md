@@ -120,7 +120,7 @@ To register a settings form for a group of settings (e.g. myservice), you must t
 
 ```yaml
   me.mybundle.myservice.form_type:
-    class: Me\\MyBundle\\Form\\Type\\Settings\\MyServiceType
+    class: Me\MyBundle\Form\Type\Settings\MyServiceType
     tags:
       - { name: vivait_settings.register.form, for: myservice, title: 'My Service Settings' }
 ```
