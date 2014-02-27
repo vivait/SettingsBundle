@@ -1,13 +1,9 @@
 Viva IT - Settings Bundle
 ============
 
-The aim of this bundle is to allow you to pass dynamic settings to services.
-These settings can be currently be stored in Doctrine, Redis, or Symfony's config
-itself. Single or multiple drivers can be specified for each setting and/or
-service, which will search each driver until a setting has been found.
+The aim of this bundle is to allow you to retrieve and pass dynamic settings to  services and other classes used in Symfony. These settings can be currently be  stored in Doctrine, Redis, or Symfony's config itself. Single or multiple drivers can be specified for each setting and/or service, which will search each driver until a setting has been found.
 
-A controller has been provided to easily allow your users to configure settings
-via a UI - although we recommend you customise this to match your own application.
+A controller has been provided to easily allow your users to configure settings via a UI - although we recommend you customise this to match your own application.
 
 Installation
 ------------
@@ -33,18 +29,18 @@ public function registerBundles()
 **Add routing rules**
 ``` yml
 # app/config/routing.yml
-tpg_extjs:
+vivait_settings:
   resource: "@VivaitSettingsBundle/Resources/config/routing.yml"
   prefix:   /settings
 ```
 
 Usage
 -----------
-Settings are accessed via a driver. The simplest way to retrieve a setting is to
+Settings are accessed via drivers. The simplest way to retrieve a setting is to
 do it directly via the vivait_settings.registry class. This will then check all
 of the drivers available until it can find the setting:
 
-```
+```php
   $this->get('vivait_settings.registry').get('configname');
 ```
 
