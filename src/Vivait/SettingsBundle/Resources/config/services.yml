@@ -43,3 +43,8 @@ services:
     arguments: [@vivait_settings.registry.drivers, @logger]
     tags:
         - { name: monolog.logger, channel: vivait_settings }
+
+  vivait.settings.configure_menu_listener:
+      class: Vivait\SettingsBundle\EventListener\ConfigureMenuListener
+      tags:
+          - { name: kernel.event_listener, event: vivait.bootstrap.menu_configure, method: onMenuConfigure }
