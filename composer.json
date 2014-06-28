@@ -1,7 +1,7 @@
 {
     "name": "vivait/settings-bundle",
     "description": "Settings Bundle",
-    "license": "proprietary",
+    "license": "MIT",
     "authors": [
         {
             "name": "Kiel Goodman",
@@ -12,10 +12,11 @@
             "email": "lewis@vivait.co.uk"
         }
     ],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "require": {
 		"symfony/yaml": ">=2.4",
-		"vivait/bootstrap-bundle": "1.1.x"
+		"vivait/bootstrap-bundle": "~1.1"
     },
 	"require-dev": {
 		"phpspec/phpspec": "dev-master"
