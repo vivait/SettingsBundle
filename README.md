@@ -13,6 +13,7 @@ $ composer require vivait/settings-bundle
 ```
 
 **Enabling bundle**
+
 ``` php
 <?php
 // app/AppKernel.php
@@ -36,7 +37,17 @@ vivait_settings:
 
 Usage
 -----------
-Settings are accessed via drivers. The simplest way to retrieve a setting is to
+Settings are accessed via drivers. The bundle comes with several drivers to get you started, but you must define them in 
+your `config.yml` file:
+
+```yaml
+vivait_settings:
+    drivers:
+        yaml: vivait_settings.driver.yaml
+        doctrine: vivait_settings.driver.doctrine
+```
+
+The simplest way to retrieve a setting is to
 do it directly via the ```vivait_settings.registry``` class. This will then check all
 of the drivers available until it can find the setting:
 
@@ -84,16 +95,14 @@ Adding custom drivers
 -----------
 Adding custom drivers is easy, and is encouraged. For example, as part of our Auth Bundle, we allow per-user settings. This is provided via a custom driver.
 
-All drivers must implement the ```\Vivait\SettingsBundle\Driver\ParametersStorageInterface``` interface. To register a driver, just tag the driver in your service configuration file with ```vivait_settings.register.driver``` and provide it with an alias:
+All drivers must implement the ```\Vivait\SettingsBundle\Driver\ParametersStorageInterface``` interface. To register a driver add your driver to the service container:
 
 ```yaml
   me.mybundle.mydriver:
     class: Me\MyBundle\Driver\MyDriver
-    tags:
-      - { name: vivait_settings.register.driver, alias: 'mydriver' }
 ```
 
-The alias can then be used to reference the driver when creating a driver collection.
+Next, add the service id to your `config.yml` file as described above.
 
 Providing a UI to customise settings
 -----------
