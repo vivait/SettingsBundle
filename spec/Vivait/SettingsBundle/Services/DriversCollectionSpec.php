@@ -59,14 +59,21 @@ class DriversCollectionSpec extends ObjectBehavior
 			->shouldBe($value);
 	}
 
-	/**
-	 * @param \Monolog\Logger $logger
-	 */
-	function it_should_log_invalid_keys(Logger $logger) {
+    /**
+     * @param \Vivait\SettingsBundle\Driver\ParametersStorageInterface $driver1
+     * @param \Monolog\Logger $logger
+     * @throws \Vivait\SettingsBundle\Exception\InsufficientDriversException
+     */
+	function it_should_log_invalid_keys(ParametersStorageInterface $driver1, Logger $logger) {
 		$key = 'invalid';
+        $this->attach($driver1);
 
 		$logger->error(Argument::containingString($key))->willReturn(true)->shouldBeCalled();
 
 		$this->get('invalid');
 	}
+
+    function it_should_throw_an_exception_if_no_drivers_defined(){
+        $this->shouldThrow('Vivait\\SettingsBundle\\Exception\\InsufficientDriversException')->duringGet('key');
+    }
 }

@@ -13,6 +13,7 @@ $ composer require vivait/settings-bundle
 ```
 
 **Enabling bundle**
+
 ``` php
 <?php
 // app/AppKernel.php
@@ -36,26 +37,36 @@ vivait_settings:
 
 Usage
 -----------
-Settings are accessed via drivers. The simplest way to retrieve a setting is to
+Settings are accessed via drivers. The bundle comes with several drivers to get you started, but you must define them in 
+your `config.yml` file:
+
+```yaml
+vivait_settings:
+    drivers:
+        yaml: vivait_settings.driver.yaml
+        doctrine: vivait_settings.driver.doctrine
+```
+
+The simplest way to retrieve a setting is to
 do it directly via the ```vivait_settings.registry``` class. This will then check all
 of the drivers available until it can find the setting:
 
 ```php
-  $this->get('vivait_settings.registry').get('settingname');
+  $this->get('vivait_settings.registry')->get('settingname');
 ```
 
 You can also check for settings via a driver collection. A driver collection is
 just a stack of drivers, and can be created via the ```vivait_settings.registry``` class.
 
 ```php
-  $this->get('vivait_settings.registry').drivers('doctrine', 'yaml').get('settingname');
+  $this->get('vivait_settings.registry')->drivers(['doctrine', 'yaml'])->get('settingname');
 ```
 In the example above, the settings registry would try each driver referenced in the driver collection and stop when it found the appropriate setting.
 
 You can also specify a default value for if a setting value isn't found in any driver:
 
 ```
-  $this->get('vivait_settings.registry').get('settingname', 'default value');
+  $this->get('vivait_settings.registry')->get('settingname', 'default value');
 ```
 
 ###Passing settings directly to services
@@ -65,7 +76,7 @@ Most likely, you're going to want to pass your settings directly to your service
 services:
     my_service:
         class:        "Me\MyBundle\Services\MyService"
-        arguments:    [ "@=service('vivait_settings.registry').get('myservice.settingname')" ]
+        arguments:    [ "@=service('vivait_settings.registry')->get('myservice.settingname')" ]
 ```
 
 You can still specify the drivers in the expression:
@@ -73,7 +84,7 @@ You can still specify the drivers in the expression:
 services:
     my_service:
         class:        "Me\MyBundle\Services\MyService"
-        arguments:    [ "@=service('vivait_settings.registry').drivers('yaml', 'doctrine').get('myservice.settingname')" ]
+        arguments:    [ "@=service('vivait_settings.registry')->drivers(['yaml', 'doctrine'])->get('myservice.settingname')" ]
 ```
 
 __Notice in the examples above how we've used a '.' to categorise a setting. The
@@ -84,16 +95,14 @@ Adding custom drivers
 -----------
 Adding custom drivers is easy, and is encouraged. For example, as part of our Auth Bundle, we allow per-user settings. This is provided via a custom driver.
 
-All drivers must implement the ```\Vivait\SettingsBundle\Driver\ParametersStorageInterface``` interface. To register a driver, just tag the driver in your service configuration file with ```vivait_settings.register.driver``` and provide it with an alias:
+All drivers must implement the ```\Vivait\SettingsBundle\Driver\ParametersStorageInterface``` interface. To register a driver add your driver to the service container:
 
 ```yaml
   me.mybundle.mydriver:
     class: Me\MyBundle\Driver\MyDriver
-    tags:
-      - { name: vivait_settings.register.driver, alias: 'mydriver' }
 ```
 
-The alias can then be used to reference the driver when creating a driver collection.
+Next, add the service id to your `config.yml` file as described above.
 
 Providing a UI to customise settings
 -----------

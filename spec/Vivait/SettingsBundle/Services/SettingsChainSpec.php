@@ -27,8 +27,8 @@ class SettingsChainSpec extends ObjectBehavior {
 	}
 
 	function it_should_create_a_driver_collection_based_on_arguments() {
-		$drivers = $this->drivers('driver1', 'driver2');
+		$drivers = $this->drivers(['driver1', 'driver2']);
 
-		$drivers->shouldHaveType('\Vivait\SettingsBundle\Services\DriversColection');
+		$drivers->shouldHaveType('\Vivait\SettingsBundle\Services\DriversCollection');
 	}
 }
