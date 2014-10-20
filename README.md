@@ -41,21 +41,21 @@ do it directly via the ```vivait_settings.registry``` class. This will then chec
 of the drivers available until it can find the setting:
 
 ```php
-  $this->get('vivait_settings.registry').get('settingname');
+  $this->get('vivait_settings.registry')->get('settingname');
 ```
 
 You can also check for settings via a driver collection. A driver collection is
 just a stack of drivers, and can be created via the ```vivait_settings.registry``` class.
 
 ```php
-  $this->get('vivait_settings.registry').drivers('doctrine', 'yaml').get('settingname');
+  $this->get('vivait_settings.registry')->drivers('doctrine', 'yaml')->get('settingname');
 ```
 In the example above, the settings registry would try each driver referenced in the driver collection and stop when it found the appropriate setting.
 
 You can also specify a default value for if a setting value isn't found in any driver:
 
 ```
-  $this->get('vivait_settings.registry').get('settingname', 'default value');
+  $this->get('vivait_settings.registry')->get('settingname', 'default value');
 ```
 
 ###Passing settings directly to services
@@ -65,7 +65,7 @@ Most likely, you're going to want to pass your settings directly to your service
 services:
     my_service:
         class:        "Me\MyBundle\Services\MyService"
-        arguments:    [ "@=service('vivait_settings.registry').get('myservice.settingname')" ]
+        arguments:    [ "@=service('vivait_settings.registry')->get('myservice.settingname')" ]
 ```
 
 You can still specify the drivers in the expression:
@@ -73,7 +73,7 @@ You can still specify the drivers in the expression:
 services:
     my_service:
         class:        "Me\MyBundle\Services\MyService"
-        arguments:    [ "@=service('vivait_settings.registry').drivers('yaml', 'doctrine').get('myservice.settingname')" ]
+        arguments:    [ "@=service('vivait_settings.registry')->drivers('yaml', 'doctrine')->get('myservice.settingname')" ]
 ```
 
 __Notice in the examples above how we've used a '.' to categorise a setting. The
