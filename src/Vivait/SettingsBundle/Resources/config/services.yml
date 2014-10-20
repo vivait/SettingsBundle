@@ -22,14 +22,10 @@ services:
   vivait_settings.driver.yaml:
     class: Vivait\SettingsBundle\Driver\YamlDriver
     arguments: [@service_container]
-    tags:
-        - { name: vivait_settings.register.driver, alias: 'yaml' }
 
   vivait_settings.driver.doctrine:
     class: Vivait\SettingsBundle\Driver\DoctrineDriver
     arguments: [@doctrine.orm.default_entity_manager, @vivait_settings.repository.settings]
-    tags:
-        - { name: vivait_settings.register.driver, alias: 'doctrine' }
 
   # Registries
   vivait_settings.registry.drivers:

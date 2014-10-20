@@ -19,23 +19,12 @@ class SettingsCompilerPass implements CompilerPassInterface {
 	}
 
 	private function processDrivers(ContainerBuilder $container, Definition $definition) {
-		$taggedServices = $container->findTaggedServiceIds(
-			'vivait_settings.register.driver'
-		);
-		foreach ($taggedServices as $id => $tagAttributes) {
-			$alias = $id;
+		$services = $container->getParameter('vivait_settings.drivers.default');
 
-			// Have they tagged it with an alias?
-			foreach ($tagAttributes as $attributes) {
-				if (!empty($attributes["alias"])) {
-					$alias = $attributes["alias"];
-					break;
-				}
-			}
-
+		foreach ($services as $alias => $service) {
 			$definition->addMethodCall(
 				'addDriver',
-				array($alias, new Reference($id))
+				array($alias, new Reference($service))
 			);
 		}
 	}

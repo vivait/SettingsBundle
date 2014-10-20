@@ -24,7 +24,7 @@ class SettingsChain {
      * @return DriversCollection
      */
 	public function drivers(array $drivers = null) {
-		$drivers    = $drivers ?: $this->driversChain->getDrivers();
+		$drivers = $drivers ?: $this->driversChain->getDrivers();
 
 		$collection = new DriversCollection($this->logger);
 

@@ -2,6 +2,7 @@
 namespace Vivait\SettingsBundle\Services;
 
 use Monolog\Logger;
+use Vivait\SettingsBundle\Exception\InsufficientDriversException;
 
 class DriversCollection extends \SplObjectStorage {
 	/* @var $logger Logger */
@@ -13,6 +14,10 @@ class DriversCollection extends \SplObjectStorage {
 
 	public function get($key) {
 		$stack = array();
+
+        if(count($this) === 0){
+            throw new InsufficientDriversException("No drivers have been defined");
+        }
 
 		// Try each driver
 		foreach ($this as $driver) {

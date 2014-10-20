@@ -34,9 +34,9 @@ class DriversChainSpec extends ObjectBehavior
 			->shouldHaveCount(2);
 	}
 
-	function it_should_not_error_when_getting_undefined_drivers() {
-		$this->getDriver('invalid')->shouldBeNull();
-	}
+    function it_should_throw_an_exception_when_getting_undefined_driver(){
+        $this->shouldThrow('Vivait\\SettingsBundle\\Exception\\DriverNotFoundException')->duringGetDriver('invalid');
+    }
 
 	/**
 	 * @param \Vivait\SettingsBundle\Driver\ParametersStorageInterface $definition

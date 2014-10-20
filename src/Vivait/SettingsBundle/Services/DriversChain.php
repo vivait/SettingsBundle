@@ -6,6 +6,7 @@ use Symfony\Component\PropertyAccess\Exception\AccessException;
 use Symfony\Component\PropertyAccess\Exception\NoSuchPropertyException;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Vivait\SettingsBundle\Driver\ParametersStorageInterface;
+use Vivait\SettingsBundle\Exception\DriverNotFoundException;
 
 class DriversChain {
 	protected $drivers = array();
@@ -29,19 +30,19 @@ class DriversChain {
 		return $this;
 	}
 
-	/**
-	 * Returns a defined driver based on it alias
-	 * @param $alias
-	 * @return ParametersStorageInterface|null
-	 */
+    /**
+     * Returns a defined driver based on it alias
+     * @param $alias
+     * @throws DriverNotFoundException
+     * @return ParametersStorageInterface|null
+     */
 	public function getDriver($alias)
 	{
 		if (isset($this->drivers[$alias])) {
 			return $this->drivers[$alias];
 		}
 
-		// TODO: Throw an exception
-		return null;
+		throw new DriverNotFoundException(sprintf('The driver "%s" could not be found', $alias));
 	}
 
 	/**
