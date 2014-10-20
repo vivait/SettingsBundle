@@ -73,7 +73,7 @@ You can still specify the drivers in the expression:
 services:
     my_service:
         class:        "Me\MyBundle\Services\MyService"
-        arguments:    [ "@=service('vivait_settings.registry')->drivers('yaml', 'doctrine')->get('myservice.settingname')" ]
+        arguments:    [ "@=service('vivait_settings.registry')->drivers(['yaml', 'doctrine'])->get('myservice.settingname')" ]
 ```
 
 __Notice in the examples above how we've used a '.' to categorise a setting. The
