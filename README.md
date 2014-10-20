@@ -22,7 +22,7 @@ public function registerBundles()
 {
     $bundles = array(
         // ...
-        new Vivait\\SettingsBundle\\VivaitSettingsBundle()
+        new Vivait\SettingsBundle\VivaitSettingsBundle()
     );
 }
 ```
@@ -75,7 +75,7 @@ Most likely, you're going to want to pass your settings directly to your service
 ```yaml
 services:
     my_service:
-        class:        "Me\\MyBundle\\Services\\MyService"
+        class:        "Me\MyBundle\Services\MyService"
         arguments:    [ "@=service('vivait_settings.registry').get('myservice.settingname')" ]
 ```
 
@@ -83,7 +83,7 @@ You can still specify the drivers in the expression:
 ```yaml
 services:
     my_service:
-        class:        "Me\\MyBundle\\Services\\MyService"
+        class:        "Me\MyBundle\Services\MyService"
         arguments:    [ "@=service('vivait_settings.registry').drivers(['yaml', 'doctrine']).get('myservice.settingname')" ]
 ```
 
@@ -95,11 +95,11 @@ Adding custom drivers
 -----------
 Adding custom drivers is easy, and is encouraged. For example, as part of our Auth Bundle, we allow per-user settings. This is provided via a custom driver.
 
-All drivers must implement the ```\\Vivait\\SettingsBundle\\Driver\\ParametersStorageInterface``` interface. To register a driver add your driver to the service container:
+All drivers must implement the ```\Vivait\SettingsBundle\Driver\ParametersStorageInterface``` interface. To register a driver add your driver to the service container:
 
 ```yaml
   me.mybundle.mydriver:
-    class: Me\\MyBundle\\Driver\\MyDriver
+    class: Me\MyBundle\Driver\MyDriver
 ```
 
 Next, add the service id to your `config.yml` file as described above.
@@ -129,7 +129,7 @@ To register a settings form for a group of settings (e.g. myservice), you must t
 
 ```yaml
   me.mybundle.myservice.form_type:
-    class: Me\\MyBundle\\Form\\Type\\Settings\\MyServiceType
+    class: Me\MyBundle\Form\Type\Settings\MyServiceType
     tags:
       - { name: vivait_settings.register.form, for: myservice, title: 'My Service Settings' }
 ```
