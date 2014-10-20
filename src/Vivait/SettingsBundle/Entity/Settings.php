@@ -28,16 +28,10 @@ class Settings {
 	private $value;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="\Vivait\AuthBundle\Entity\Tenant", inversedBy="settings")
-	 */
-	private $tenant;
-
-	/**
 	 * Constructor
 	 */
 	public function __construct($id = null) {
 		$this->id      = $id;
-		$this->tenants = new ArrayCollection();
 	}
 
 	/**
@@ -59,10 +53,10 @@ class Settings {
 		return $this->id;
 	}
 
-	/**
-	 * Sets value
-	 * @param string $value
-	 */
+    /**
+     * @param $value
+     * @return $this
+     */
 	public function setValue($value) {
 		$this->value = $value;
 
@@ -74,26 +68,5 @@ class Settings {
 	 */
 	public function getValue() {
 		return $this->value;
-	}
-
-	/**
-	 * Set tenant
-	 *
-	 * @param \Vivait\AuthBundle\Entity\Tenant $tenant
-	 * @return Settings
-	 */
-	public function setTenant(\Vivait\AuthBundle\Entity\Tenant $tenant = null) {
-		$this->tenant = $tenant;
-
-		return $this;
-	}
-
-	/**
-	 * Get tenant
-	 *
-	 * @return \Vivait\AuthBundle\Entity\Tenant
-	 */
-	public function getTenant() {
-		return $this->tenant;
 	}
 }
