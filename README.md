@@ -48,7 +48,7 @@ You can also check for settings via a driver collection. A driver collection is
 just a stack of drivers, and can be created via the ```vivait_settings.registry``` class.
 
 ```php
-  $this->get('vivait_settings.registry')->drivers('doctrine', 'yaml')->get('settingname');
+  $this->get('vivait_settings.registry')->drivers(['doctrine', 'yaml'])->get('settingname');
 ```
 In the example above, the settings registry would try each driver referenced in the driver collection and stop when it found the appropriate setting.
 

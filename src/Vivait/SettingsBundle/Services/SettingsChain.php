@@ -19,11 +19,13 @@ class SettingsChain {
 		$this->logger       = $logger;
 	}
 
-	/**
-	 * @return DriversCollection
-	 */
-	public function drivers() {
-		$drivers    = func_get_args() ?: $this->driversChain->getDrivers();
+    /**
+     * @param array $drivers
+     * @return DriversCollection
+     */
+	public function drivers(array $drivers = null) {
+		$drivers    = $drivers ?: $this->driversChain->getDrivers();
+
 		$collection = new DriversCollection($this->logger);
 
 		foreach ($drivers as $driver) {
