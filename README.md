@@ -9,7 +9,7 @@ Installation
 ------------
 **Using composer**
 ``` bash
-$ composer require viviat/settings-bundle
+$ composer require vivait/settings-bundle
 ```
 
 **Enabling bundle**
