@@ -19,7 +19,8 @@
 		"vivait/bootstrap-bundle": "~1.1"
     },
 	"require-dev": {
-		"phpspec/phpspec": "dev-master"
+		"phpspec/phpspec": "dev-master",
+        "monolog/monolog": "~1.11"
 	},
     "autoload": {
         "psr-0": {
