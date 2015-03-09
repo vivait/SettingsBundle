@@ -37,7 +37,7 @@ vivait_settings:
 
 Usage
 -----------
-Settings are accessed via drivers. The bundle comes with several drivers to get you started, but you must define them in 
+Settings are accessed via drivers. The bundle comes with several drivers to get you started, but you must define them in
 your `config.yml` file:
 
 ```yaml
@@ -104,37 +104,52 @@ All drivers must implement the ```\Vivait\SettingsBundle\Driver\ParametersStorag
 
 Next, add the service id to your `config.yml` file as described above.
 
-Providing a UI to customise settings
+Using a form to change a setting
 -----------
-For maximum flexibility, a new form type should be created for each group of settings you'd like to configure. These can then be collated in to a single form if required, or provided on different pages.
 
-The bundle provides a SettingsType which will handle the binding of the form submission to updating a driver's storage. An instance of SettingsType can only be binded to one driver, and in most cases this should be sufficient. The Yaml driver cannot be used with the SettingsType because it is not persistent, this driver is meant as a fallback driver. An example of how to build your form is below:
-
-```php
-$form         = new MyServiceType(); // Change this with your form type
-$driver       = $this->get('vivait_settings.driver.doctrine');
-$settingsType = new SettingsType($driver, $form);
-
-$form = $this->createForm($settingsType);
-```
-
-In this example, the settings bundle will act as a middleman, binding the settings to ```MyServiceType``` and updating the driver when the form is successfully submitted.
-
-Grouped settings
------------
-When dealing with settings from multiple components, it is recommended to group the settings. As mentioned before, the bundle provides some helper utilities for grouping settings. This allows you to link to bundle in to the settings bundle in a modular way.
-
-### Registering a form type to be used as a settings form
-To register a settings form for a group of settings (e.g. myservice), you must tag it with ```vivait_settings.register.form```, provide it with an alias that matches the group name of your settings, and provide it with a title:
+Create a form type, and inject the required driver.
 
 ```yaml
-  me.mybundle.myservice.form_type:
-    class: Me\MyBundle\Form\Type\Settings\MyServiceType
+  me.mybundle.form.type.settings_signtaure:
+    class: Me\MyBundle\Form\Type\SignatureType
+    arguments: [@vivait_settings.driver.doctrine]
     tags:
-      - { name: vivait_settings.register.form, for: myservice, title: 'My Service Settings' }
+      - { name: form.type, alias: 'signature' }
 ```
 
-All settings in this group will accessible via myservice.settingname.
+In the form type, add the setting keys you wish to modify, as well as `SettingsSubscriber` and the `KeyToArrayTransformer`:
+
+```php
+public function buildForm(FormBuilderInterface $builder, array $options)
+{
+    $builder
+        ->add(
+            'signature', //setting key
+            'textarea'
+        )
+    ->add('Submit', 'submit');
+
+    $builder->addEventSubscriber(new SettingsSubscriber($this->driver));
+    $builder->addModelTransformer(new KeyToArrayTransformer());
+}
+```
+
+Handle your form as normal, but set the data using your driver of choice:
+
+
+```php
+public function signatureAction(Request $request)
+{
+    $form = $this->createForm('signature');
+    $form->handleRequest($request);
+
+    if($form->isValid()){
+        $driver = $this->get('vivait_settings.driver.doctrine');
+        foreach($form->getData() as $key => $value){
+            $driver->set($key, $value);
+    }
+}
+```
 
 Testing Run
 -----------
