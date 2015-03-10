@@ -25,7 +25,9 @@ class SettingsSubscriber implements EventSubscriberInterface
 
 	public function hydrateDataEvent(FormEvent $event) {
 		foreach ($event->getForm()->all() as $child) {
-			$this->hydrateData($child);
+			if($child instanceof Form){
+				$this->hydrateData($child);
+			}
 		}
 	}
 

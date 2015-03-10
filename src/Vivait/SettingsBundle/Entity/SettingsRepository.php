@@ -16,7 +16,7 @@ class SettingsRepository extends EntityRepository {
 		}, $query->getArrayResult());
 	}
 
-	public function create() {
-		return new Settings();
+	public function create($id) {
+		return new Settings($id);
 	}
 }
