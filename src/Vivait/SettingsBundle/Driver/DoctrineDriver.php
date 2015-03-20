@@ -45,10 +45,7 @@ class DoctrineDriver implements ParametersStorageInterface {
 
 		$entity->setValue($value);
 		$this->entity_manager->persist($entity);
-	}
-
-	public function __destruct() {
-		$this->entity_manager->flush();
+		$this->entity_manager->flush($entity);
 	}
 
 	public function remove($key) {
