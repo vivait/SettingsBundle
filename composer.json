@@ -15,8 +15,7 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-		"symfony/yaml": ">=2.4",
-		"vivait/bootstrap-bundle": "~1.1"
+		"symfony/yaml": ">=2.4"
     },
 	"require-dev": {
 		"phpspec/phpspec": "dev-master",
