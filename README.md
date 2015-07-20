@@ -1,4 +1,4 @@
-Viva IT - Settings Bundle
+Viva IT - Settings Bundle [![Build Status](https://travis-ci.org/vivait/SettingsBundle.svg)](https://travis-ci.org/vivait/SettingsBundle)
 ============
 
 The aim of this bundle is to allow you to retrieve and pass dynamic settings to  services and other classes used in Symfony. These settings can be currently be  stored in Doctrine, Redis, or Symfony's config itself. Single or multiple drivers can be specified for each setting and/or service, which will search each driver until a setting has been found.
