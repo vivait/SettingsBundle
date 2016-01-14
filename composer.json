@@ -18,9 +18,12 @@
 		"symfony/yaml": ">=2.4"
     },
 	"require-dev": {
-		"phpspec/phpspec": "dev-master",
+        "phpspec/phpspec": "~2.0",
         "monolog/monolog": "~1.11"
 	},
+    "config": {
+        "bin-dir": "bin"
+    },
     "autoload": {
         "psr-0": {
             "Vivait\\SettingsBundle": "src/"
