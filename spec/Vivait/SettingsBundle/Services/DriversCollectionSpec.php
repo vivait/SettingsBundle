@@ -68,9 +68,9 @@ class DriversCollectionSpec extends ObjectBehavior
 		$key = 'invalid';
         $this->attach($driver1);
 
-		$logger->error(Argument::containingString($key))->willReturn(true)->shouldBeCalled();
+		$logger->warning(Argument::containingString($key))->willReturn(true)->shouldBeCalled();
 
-		$this->get('invalid');
+		$this->get($key);
 	}
 
     function it_should_throw_an_exception_if_no_drivers_defined(){
