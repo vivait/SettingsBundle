@@ -29,7 +29,7 @@ class DriversCollection extends \SplObjectStorage {
 		}
 
 		// Log the failure
-		$this->logger->error(sprintf('No setting "%s" found, tried drivers "%s".', $key, implode(', ', $stack)));
+		$this->logger->warning(sprintf('No setting "%s" found, tried drivers "%s".', $key, implode(', ', $stack)));
 
 		return null;
 	}
