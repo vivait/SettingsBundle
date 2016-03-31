@@ -2,13 +2,13 @@
 
 namespace Vivait\SettingsBundle\Tests\Controller;
 
-use Vivait\SettingsBundle\Driver\DoctrineDriver;
 use Vivait\SettingsBundle\Services\DriversCollection;
 use Vivait\SettingsBundle\Services\SettingsService;
 
 class DriverCollectionTest extends \PHPUnit_Framework_TestCase
 {
 	protected $driver_collection;
+	protected $doctrine_driver;
 
 	public function setUp() {
 		$em = $this->getMockBuilder('Doctrine\ORM\EntityManager')
@@ -18,31 +18,28 @@ class DriverCollectionTest extends \PHPUnit_Framework_TestCase
 			->disableOriginalConstructor()
 			->getMock();
 
-		$doctrine_driver = $this->getMockBuilder('Vivait\SettingsBundle\Driver')
+		$this->doctrine_driver = $this->getMockBuilder('Vivait\SettingsBundle\Driver\DoctrineDriver')
 			->disableOriginalConstructor()
 			->getMock();
-
-		$doctrine_driver->expects($this->any())
-			->method('has')
-			->with('existing_parameter')
-			->willReturn('true');
-		$doctrine_driver->expects($this->any())
-			->method('has')
-			->with('non_existing_parameter')
-			->willReturn('false');
 
 		$logger = $this->getMockBuilder('Monolog\Logger')
 			->disableOriginalConstructor()
 			->getMock();
 
 		$this->driver_collection = new DriversCollection($logger);
-		$this->driver_collection->attach($doctrine_driver);
+		$this->driver_collection->attach($this->doctrine_driver);
 	}
 
 	/**
 	 * @test
 	 */
 	public function hasReturnsTrueWhenSettingExisits() {
+
+		$this->doctrine_driver->expects($this->any())
+			->method('has')
+			->with('existing_parameter')
+			->will($this->returnValue(true));
+
 		$this->assertTrue($this->driver_collection->has('existing_parameter'));
 	}
 
@@ -50,6 +47,11 @@ class DriverCollectionTest extends \PHPUnit_Framework_TestCase
 	 * @test
 	 */
 	public function hasReturnsFalseWhenSettingDoesntExisit() {
+		$this->doctrine_driver->expects($this->any())
+			->method('has')
+			->with('non_existing_parameter')
+			->will($this->returnValue(false));
+
 		$this->assertFalse($this->driver_collection->has('non_existing_parameter'));
 	}
 }
