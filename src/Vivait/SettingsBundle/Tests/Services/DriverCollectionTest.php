@@ -3,7 +3,6 @@
 namespace Vivait\SettingsBundle\Tests\Controller;
 
 use Vivait\SettingsBundle\Services\DriversCollection;
-use Vivait\SettingsBundle\Services\SettingsService;
 
 class DriverCollectionTest extends \PHPUnit_Framework_TestCase
 {
@@ -11,13 +10,6 @@ class DriverCollectionTest extends \PHPUnit_Framework_TestCase
 	protected $doctrine_driver;
 
 	public function setUp() {
-		$em = $this->getMockBuilder('Doctrine\ORM\EntityManager')
-			->disableOriginalConstructor()
-			->getMock();
-		$repo = $this->getMockBuilder('Doctrine\ORM\EntityRepository')
-			->disableOriginalConstructor()
-			->getMock();
-
 		$this->doctrine_driver = $this->getMockBuilder('Vivait\SettingsBundle\Driver\DoctrineDriver')
 			->disableOriginalConstructor()
 			->getMock();
