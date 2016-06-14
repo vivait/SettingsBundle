@@ -34,4 +34,14 @@ class DriversCollection extends \SplObjectStorage {
 		return null;
 	}
 
+	public function has($key) {
+		// Try each driver
+		foreach ($this as $driver) {
+			if ($driver->has($key)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
 } 
