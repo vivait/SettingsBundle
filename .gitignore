@@ -1,3 +1,4 @@
 # Managed by Composer
 /app/*
 /bin/*
+/vendor
