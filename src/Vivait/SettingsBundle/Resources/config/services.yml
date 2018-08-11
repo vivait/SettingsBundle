@@ -4,7 +4,7 @@ parameters:
 services:
 #    vivait_settings.example:
 #        class: %vivait_settings.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+#        arguments: ["@service_id", "plain_value", %parameter%]
 
 #  vivait_settings.expression_language:
 #    class: Vivait\SettingsBundle\ExpressionLanguage
@@ -21,11 +21,11 @@ services:
   # Drivers
   vivait_settings.driver.yaml:
     class: Vivait\SettingsBundle\Driver\YamlDriver
-    arguments: [@service_container]
+    arguments: ["@service_container"]
 
   vivait_settings.driver.doctrine:
     class: Vivait\SettingsBundle\Driver\DoctrineDriver
-    arguments: [@doctrine.orm.default_entity_manager, @vivait_settings.repository.settings]
+    arguments: ["@doctrine.orm.default_entity_manager", "@vivait_settings.repository.settings"]
 
   # Registries
   vivait_settings.registry.drivers:
@@ -36,6 +36,6 @@ services:
 
   vivait_settings.registry:
     class: Vivait\SettingsBundle\Services\SettingsChain
-    arguments: [@vivait_settings.registry.drivers, @logger]
+    arguments: ["@vivait_settings.registry.drivers", "@logger"]
     tags:
         - { name: monolog.logger, channel: vivait_settings }
