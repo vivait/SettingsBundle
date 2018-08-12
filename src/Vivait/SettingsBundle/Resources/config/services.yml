@@ -13,10 +13,9 @@ services:
   # Repositories
   vivait_settings.repository.settings:
     class: Doctrine\ORM\EntityRepository
-    factory_service: doctrine.orm.entity_manager
-    factory_method: getRepository
+    factory: 'Doctrine\ORM\EntityManagerInterface:getRepository'
     arguments:
-        - VivaitSettingsBundle:Settings
+      - Vivait\SettingsBundle\Entity\Settings
 
   # Drivers
   vivait_settings.driver.yaml:
